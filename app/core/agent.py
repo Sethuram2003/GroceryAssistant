@@ -10,16 +10,12 @@ checkpointer = InMemorySaver()
 
 async def chat_agent():
     
-    llm = ChatOllama(model="gemma4:e4b")
+    llm = ChatOllama(model="lfm2.5-thinking:latest")
 
-    McpConfig={
-           
-        }
+    McpConfig={}
     
-
     client = MultiServerMCPClient(McpConfig)
     tools = await client.get_tools()
-
 
     agent = create_agent(
         llm,
@@ -29,8 +25,6 @@ async def chat_agent():
 
     )
  
-
-
     return agent
 
 async def main():

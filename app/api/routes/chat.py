@@ -8,7 +8,7 @@ config = {"configurable": {"thread_id": "1"}}
 @router.post("/", status_code=200)
 async def chat_message(message: str):
     """Chat endpoint for user messages."""
-    agent = chat_agent()
+    agent = await chat_agent()
 
     response = await agent.ainvoke(
         {"messages": [{"role": "user", "content": message}]},
