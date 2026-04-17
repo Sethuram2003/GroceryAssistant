@@ -9,17 +9,24 @@ let currentEditingProductId = null;
 
 // ============= Initialization =============
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('🚀 Page loaded, starting initialization...');
     initializeEventListeners();
+    console.log('📊 Checking database connection...');
     checkDatabaseConnection();
+    console.log('📈 Loading dashboard...');
     loadDashboard();
+    console.log('✅ Initialization complete!');
 });
 
 // ============= Event Listeners =============
 function initializeEventListeners() {
+    console.log('🔧 Initializing event listeners...');
+    
     // Navigation tabs
     document.querySelectorAll('.nav-tab').forEach(tab => {
         tab.addEventListener('click', switchTab);
     });
+    console.log('✓ Tab navigation listeners attached');
 
     // Category modal buttons
     document.getElementById('addCategoryBtn').addEventListener('click', openCategoryModal);
@@ -47,6 +54,34 @@ function initializeEventListeners() {
     document.getElementById('searchProducts').addEventListener('input', filterProducts);
     document.getElementById('filterCategory').addEventListener('change', filterProducts);
     document.getElementById('filterStatus').addEventListener('change', filterProducts);
+
+    // Chat events
+    const sendChatBtn = document.getElementById('sendChatBtn');
+    const chatInput = document.getElementById('chatInput');
+    
+    if (sendChatBtn) {
+        sendChatBtn.addEventListener('click', () => {
+            console.log('💬 Send button clicked!');
+            sendChatMessage();
+        });
+        console.log('✓ Send button listener attached');
+    } else {
+        console.error('❌ Send button (#sendChatBtn) not found!');
+    }
+    
+    if (chatInput) {
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                console.log('💬 Enter key pressed in chat input!');
+                sendChatMessage();
+            }
+        });
+        console.log('✓ Chat input listener attached');
+    } else {
+        console.error('❌ Chat input (#chatInput) not found!');
+    }
+    
+    console.log('✅ All event listeners initialized successfully');
 }
 
 // ============= Connection Check =============
@@ -506,3 +541,137 @@ function showToast(message, type = 'info') {
         toast.classList.remove('show');
     }, 3000);
 }
+
+// ============= Chat Functionality =============
+async function sendChatMessage() {
+    try {
+        const chatInput = document.getElementById('chatInput');
+        if (!chatInput) {
+            console.error('chatInput element not found!');
+            return;
+        }
+        
+        const message = chatInput.value.trim();
+        console.log('Message to send:', message);
+        
+        if (!message) {
+            console.warn('Empty message, ignoring');
+            return;
+        }
+
+        // Add user message to chat
+        addChatMessage(message, 'user');
+        chatInput.value = '';
+        chatInput.focus();
+
+        // Show loading indicator
+        addChatMessage('Thinking...', 'assistant-loading');
+
+        // Send message to backend
+        const url = `${API_BASE_URL}/chat/?message=${encodeURIComponent(message)}`;
+        console.log('🚀 Sending chat request to:', url);
+        console.log('📍 API Base URL:', API_BASE_URL);
+        
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        console.log('📨 Response received - Status:', response.status, 'OK:', response.ok);
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('❌ Chat error response:', errorText);
+            removeLastMessage();
+            addChatMessage(`Error: Server responded with status ${response.status}. Please try again.`, 'assistant');
+            return;
+        }
+
+        const data = await response.json();
+        console.log('✅ Chat response data:', data);
+        
+        // Remove loading message and add assistant response
+        removeLastMessage();
+        const responseText = data.response || data.message || 'I couldn\'t generate a response.';
+        addChatMessage(responseText, 'assistant');
+
+    } catch (error) {
+        console.error('❌ Error in sendChatMessage:', error);
+        console.error('Error details:', {
+            message: error.message,
+            stack: error.stack,
+            name: error.name
+        });
+        removeLastMessage();
+        addChatMessage(`Error: ${error.message}. Make sure the backend is running at ${API_BASE_URL}`, 'assistant');
+    }
+}
+
+function addChatMessage(text, sender = 'user') {
+    try {
+        const chatMessages = document.getElementById('chatMessages');
+        if (!chatMessages) {
+            console.error('chatMessages element not found!');
+            return;
+        }
+        
+        console.log(`📝 Adding ${sender} message:`, text.substring(0, 50) + '...');
+        
+        // Create message container
+        const messageContainer = document.createElement('div');
+        messageContainer.className = `message-container ${sender === 'user' ? 'user-message-container' : 'assistant-message-container'}`;
+        
+        // Create avatar
+        const avatar = document.createElement('div');
+        avatar.className = `message-avatar ${sender === 'user' ? 'user-avatar' : 'bot-avatar'}`;
+        avatar.textContent = sender === 'user' ? '👤' : '🤖';
+        
+        // Create bubble wrapper
+        const bubbleWrapper = document.createElement('div');
+        bubbleWrapper.className = 'message-bubble-wrapper';
+        
+        // Create bubble
+        const bubble = document.createElement('div');
+        bubble.className = `message-bubble ${sender === 'user' ? 'user-bubble' : 'bot-bubble'}`;
+        
+        if (sender === 'assistant-loading') {
+            bubble.innerHTML = '<span class="chat-loading">Thinking<span></span></span>';
+        } else {
+            const p = document.createElement('p');
+            p.textContent = text;
+            bubble.appendChild(p);
+        }
+        
+        // Add timestamp
+        const timestamp = document.createElement('span');
+        timestamp.className = 'message-timestamp';
+        timestamp.textContent = 'now';
+        
+        bubbleWrapper.appendChild(bubble);
+        bubbleWrapper.appendChild(timestamp);
+        messageContainer.appendChild(avatar);
+        messageContainer.appendChild(bubbleWrapper);
+        chatMessages.appendChild(messageContainer);
+        
+        console.log('✓ Message added to DOM');
+
+        // Auto-scroll to bottom
+        setTimeout(() => {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            console.log('↙️ Auto-scrolled to bottom');
+        }, 0);
+    } catch (error) {
+        console.error('❌ Error in addChatMessage:', error);
+    }
+}
+
+function removeLastMessage() {
+    const chatMessages = document.getElementById('chatMessages');
+    const lastMessage = chatMessages.lastElementChild;
+    if (lastMessage) {
+        lastMessage.remove();
+    }
+}
+

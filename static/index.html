@@ -27,6 +27,7 @@
             <button class="nav-tab active" data-tab="dashboard">📊 Dashboard</button>
             <button class="nav-tab" data-tab="categories">📁 Categories</button>
             <button class="nav-tab" data-tab="products">📦 Products</button>
+            <button class="nav-tab" data-tab="chat">💬 Chat Assistant</button>
         </nav>
 
         <!-- Main Content -->
@@ -93,6 +94,66 @@
 
                 <div id="productsContainer" class="products-table">
                     <p class="empty-state">No products yet. Create your first product!</p>
+                </div>
+            </section>
+
+            <!-- Chat Tab -->
+            <section id="chat" class="tab-content chat-tab-content">
+                <div class="chat-main-wrapper">
+                    <!-- Chat Header -->
+                    <div class="chat-premium-header">
+                        <div class="chat-header-left">
+                            <div class="chat-header-avatar-large">🤖</div>
+                            <div class="chat-header-info">
+                                <h2>Grocery Assistant AI</h2>
+                                <div class="chat-status-line">
+                                    <span class="status-indicator online"></span>
+                                    <span class="status-text">Online & Ready to Help</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-header-badges">
+                            <span class="badge badge-primary">⚡ Instant Responses</span>
+                            <span class="badge badge-secondary">🎯 Accurate Info</span>
+                        </div>
+                    </div>
+
+                    <!-- Chat Container -->
+                    <div class="chat-interface">
+                        <!-- Messages Area -->
+                        <div class="chat-messages-wrapper">
+                            <div class="chat-messages" id="chatMessages">
+                                <div class="message-container assistant-message-container">
+                                    <div class="message-avatar bot-avatar">🤖</div>
+                                    <div class="message-bubble-wrapper">
+                                        <div class="message-bubble bot-bubble">
+                                            <p>Welcome to Grocery Assistant! 👋</p>
+                                        </div>
+                                        <span class="message-timestamp">Just now</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Input Area -->
+                        <div class="chat-input-section">
+                            <div class="input-group">
+                                <div class="input-field-wrapper">
+                                    <input 
+                                        type="text" 
+                                        id="chatInput" 
+                                        class="premium-chat-input" 
+                                        placeholder="Ask me anything... What products do you need?"
+                                        autocomplete="off"
+                                    >
+                                    <div class="input-underline"></div>
+                                </div>
+                                <button id="sendChatBtn" class="btn-send-premium">
+                                    <span class="send-icon-premium">➤</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>
