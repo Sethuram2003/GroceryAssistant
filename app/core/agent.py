@@ -10,9 +10,27 @@ checkpointer = InMemorySaver()
 
 async def chat_agent():
     
-    llm = ChatOllama(model="lfm2.5-thinking:latest")
+    llm = ChatOllama(model="gemma4:31b-cloud")
 
-    McpConfig={}
+    McpConfig={
+    "mysql": {
+      "command": "uv",
+      "transport": "stdio",
+      "args": [
+        "--directory",
+        "/Users/sethuramgauthamr/Documents/Projects/GroceryAssistant/mysql_mcp_server/src/mysql_mcp_server",
+        "run",
+        "mysql_mcp_server"
+      ],
+        "env": {
+            "MYSQL_HOST": "localhost",
+            "MYSQL_PORT": "3306",
+            "MYSQL_USER": "root",
+            "MYSQL_PASSWORD": "",
+            "MYSQL_DATABASE": "grocery_shop"
+        }
+  }
+    }
     
     client = MultiServerMCPClient(McpConfig)
     tools = await client.get_tools()
