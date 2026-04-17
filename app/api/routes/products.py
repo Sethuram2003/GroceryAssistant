@@ -1,10 +1,9 @@
-from fastapi import APIRouter, HTTPException, Depends, Query, Depends
+from fastapi import APIRouter, HTTPException, Depends, Query
 from typing import Optional, List
+from datetime import datetime
 import os
 from app.core.mysql_database.mysql_service import get_mysql_service
 from app.core.mysql_database.mysql_manager import MySQLManager
-
-
 from pydantic import BaseModel
 
 router = APIRouter(prefix="/products", tags=["products"])
@@ -37,8 +36,8 @@ class ProductResponse(BaseModel):
     stock_quantity: float
     selling_price: float
     is_active: int
-    created_at: str
-    updated_at: str
+    created_at: datetime
+    updated_at: datetime
 
     class Config:
         from_attributes = True
@@ -47,6 +46,9 @@ class ProductResponse(BaseModel):
 @router.post("/", response_model=ProductResponse, status_code=201)
 def create_product(product: ProductCreate, db: MySQLManager = Depends(get_mysql_service)):
     """Create a new product."""
+    if db is None:
+        raise HTTPException(status_code=503, detail="Database service unavailable")
+    
     try:
         product_id = db.create_product(
             name=product.name,
@@ -61,24 +63,29 @@ def create_product(product: ProductCreate, db: MySQLManager = Depends(get_mysql_
         if result:
             return result
         raise HTTPException(status_code=500, detail="Failed to create product")
+    except HTTPException:
+        raise
     except Exception as e:
         if "FOREIGN KEY constraint failed" in str(e) or "Cannot add" in str(e):
             raise HTTPException(status_code=400, detail="Invalid category_id")
         raise HTTPException(status_code=500, detail=str(e))
-    finally:
-        db.close()
 
 
 @router.get("/{product_id}", response_model=ProductResponse)
 def get_product(product_id: int, db: MySQLManager = Depends(get_mysql_service)):
     """Get a product by ID."""
+    if db is None:
+        raise HTTPException(status_code=503, detail="Database service unavailable")
+    
     try:
         result = db.get_product(product_id)
         if not result:
             raise HTTPException(status_code=404, detail="Product not found")
         return result
-    finally:
-        db.close()
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.get("/", response_model=List[ProductResponse])
@@ -88,16 +95,22 @@ def get_all_products(
     db: MySQLManager = Depends(get_mysql_service)
 ):
     """Get all products with optional filtering."""
+    if db is None:
+        raise HTTPException(status_code=503, detail="Database service unavailable")
+    
     try:
         results = db.get_all_products(category_id=category_id, is_active=is_active)
         return results
-    finally:
-        db.close()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.put("/{product_id}", response_model=ProductResponse)
 def update_product(product_id: int, product: ProductUpdate, db: MySQLManager = Depends(get_mysql_service)):
     """Update a product."""
+    if db is None:
+        raise HTTPException(status_code=503, detail="Database service unavailable")
+    
     try:
         # Check if product exists
         existing = db.get_product(product_id)
@@ -127,13 +140,14 @@ def update_product(product_id: int, product: ProductUpdate, db: MySQLManager = D
         if "FOREIGN KEY constraint failed" in str(e) or "Cannot add" in str(e):
             raise HTTPException(status_code=400, detail="Invalid category_id")
         raise HTTPException(status_code=500, detail=str(e))
-    finally:
-        db.close()
 
 
 @router.delete("/{product_id}", status_code=204)
 def delete_product(product_id: int, db: MySQLManager = Depends(get_mysql_service)):
     """Delete a product."""
+    if db is None:
+        raise HTTPException(status_code=503, detail="Database service unavailable")
+    
     try:
         # Check if product exists
         existing = db.get_product(product_id)
@@ -147,5 +161,3 @@ def delete_product(product_id: int, db: MySQLManager = Depends(get_mysql_service
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    finally:
-        db.close()

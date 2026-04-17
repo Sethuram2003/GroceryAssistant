@@ -1,6 +1,9 @@
 import mysql.connector
 from mysql.connector import Error
 from typing import Optional, List, Dict, Any
+import logging
+
+logger = logging.getLogger(__name__)
 
 class MySQLManager:
     """
@@ -32,16 +35,25 @@ class MySQLManager:
                 password=self.password,
                 database=None  
             )
-            print("MySQL connection established.")
+            logger.info("MySQL connection established.")
         except Error as e:
-            print(f"Error connecting to MySQL: {e}")
-            raise
+            logger.error(f"Error connecting to MySQL: {e}")
+            self.connection = None
 
     def close(self):
         """Close the database connection."""
         if self.connection and self.connection.is_connected():
-            self.connection.close()
-            print("MySQL connection closed.")
+            try:
+                self.connection.close()
+                logger.info("MySQL connection closed.")
+            except Error as e:
+                logger.error(f"Error closing MySQL connection: {e}")
+        self.connection = None
+
+    def _check_connection(self):
+        """Check if connection is available, raise ValueError if not."""
+        if not self.connection or not self.connection.is_connected():
+            raise ValueError("Database connection is not available. Ensure MySQL server is running and credentials are correct.")
 
 
 
@@ -50,26 +62,38 @@ class MySQLManager:
         Create a new database with the given name if it does not exist.
         Uses utf8mb4 character set for full Unicode support.
         """
+        try:
+            self._check_connection()
+        except ValueError as e:
+            logger.error(str(e))
+            return
+
         cursor = self.connection.cursor()
         try:
             cursor.execute(f"CREATE DATABASE IF NOT EXISTS {db_name} "
                            f"CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
             self.connection.commit()
-            print(f"Database '{db_name}' created or already exists.")
+            logger.info(f"Database '{db_name}' created or already exists.")
         except Error as e:
-            print(f"Error creating database '{db_name}': {e}")
+            logger.error(f"Error creating database '{db_name}': {e}")
         finally:
             cursor.close()
 
     def delete_database(self, db_name: str):
         """Drop the specified database if it exists."""
+        try:
+            self._check_connection()
+        except ValueError as e:
+            logger.error(str(e))
+            return
+
         cursor = self.connection.cursor()
         try:
             cursor.execute(f"DROP DATABASE IF EXISTS {db_name}")
             self.connection.commit()
-            print(f"Database '{db_name}' deleted successfully.")
+            logger.info(f"Database '{db_name}' deleted successfully.")
         except Error as e:
-            print(f"Error deleting database '{db_name}': {e}")
+            logger.error(f"Error deleting database '{db_name}': {e}")
         finally:
             cursor.close()
 
@@ -78,6 +102,12 @@ class MySQLManager:
         Remove all data from the database by truncating products and categories tables.
         The database itself is not deleted.
         """
+        try:
+            self._check_connection()
+        except ValueError as e:
+            logger.error(str(e))
+            return
+
         cursor = self.connection.cursor()
         try:
             cursor.execute(f"USE {db_name}")
@@ -86,9 +116,9 @@ class MySQLManager:
             cursor.execute("TRUNCATE TABLE categories")
             cursor.execute("SET FOREIGN_KEY_CHECKS = 1")
             self.connection.commit()
-            print(f"Database '{db_name}' cleared successfully.")
+            logger.info(f"Database '{db_name}' cleared successfully.")
         except Error as e:
-            print(f"Error clearing database '{db_name}': {e}")
+            logger.error(f"Error clearing database '{db_name}': {e}")
         finally:
             cursor.close()
 
@@ -98,6 +128,12 @@ class MySQLManager:
         Create the `categories` and `products` tables in the specified database.
         If db_name is omitted, self.default_database is used.
         """
+        try:
+            self._check_connection()
+        except ValueError as e:
+            logger.error(str(e))
+            return
+
         target_db = db_name or self.default_database
         if not target_db:
             raise ValueError("No database specified to create tables.")
@@ -135,9 +171,9 @@ class MySQLManager:
             """)
 
             self.connection.commit()
-            print(f"Tables created successfully in database '{target_db}'.")
+            logger.info(f"Tables created successfully in database '{target_db}'.")
         except Error as e:
-            print(f"Error creating tables: {e}")
+            logger.error(f"Error creating tables: {e}")
         finally:
             cursor.close()
 

@@ -3,11 +3,10 @@ from typing import Optional, List
 import os
 from app.core.mysql_database.mysql_manager import MySQLManager
 from app.core.mysql_database.mysql_service import get_mysql_service
+from pydantic import BaseModel
 
 router = APIRouter(prefix="/categories", tags=["categories"])
 
-
-from pydantic import BaseModel
 
 class CategoryCreate(BaseModel):
     name: str
@@ -29,6 +28,9 @@ class CategoryResponse(BaseModel):
 @router.post("/", response_model=CategoryResponse, status_code=201)
 def create_category(category: CategoryCreate, db: MySQLManager = Depends(get_mysql_service)):
     """Create a new category."""
+    if db is None:
+        raise HTTPException(status_code=503, detail="Database service unavailable")
+    
     try:
         category_id = db.create_category(
             name=category.name,
@@ -38,39 +40,50 @@ def create_category(category: CategoryCreate, db: MySQLManager = Depends(get_mys
         if result:
             return result
         raise HTTPException(status_code=500, detail="Failed to create category")
+    except HTTPException:
+        raise
     except Exception as e:
         if "UNIQUE constraint failed" in str(e) or "Duplicate entry" in str(e):
             raise HTTPException(status_code=400, detail="Category name already exists")
         raise HTTPException(status_code=500, detail=str(e))
-    finally:
-        db.close()
 
 
 @router.get("/{category_id}", response_model=CategoryResponse)
 def get_category(category_id: int, db: MySQLManager = Depends(get_mysql_service)):
     """Get a category by ID."""
+    if db is None:
+        raise HTTPException(status_code=503, detail="Database service unavailable")
+    
     try:
         result = db.get_category(category_id)
         if not result:
             raise HTTPException(status_code=404, detail="Category not found")
         return result
-    finally:
-        db.close()
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.get("/", response_model=List[CategoryResponse])
 def get_all_categories(db: MySQLManager = Depends(get_mysql_service)):
     """Get all categories."""
+    if db is None:
+        raise HTTPException(status_code=503, detail="Database service unavailable")
+    
     try:
         results = db.get_all_categories()
         return results
-    finally:
-        db.close()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.put("/{category_id}", response_model=CategoryResponse)
 def update_category(category_id: int, category: CategoryUpdate, db: MySQLManager = Depends(get_mysql_service)):
     """Update a category."""
+    if db is None:
+        raise HTTPException(status_code=503, detail="Database service unavailable")
+    
     try:
         # Check if category exists
         existing = db.get_category(category_id)
@@ -95,13 +108,14 @@ def update_category(category_id: int, category: CategoryUpdate, db: MySQLManager
         if "UNIQUE constraint failed" in str(e) or "Duplicate entry" in str(e):
             raise HTTPException(status_code=400, detail="Category name already exists")
         raise HTTPException(status_code=500, detail=str(e))
-    finally:
-        db.close()
 
 
 @router.delete("/{category_id}", status_code=204)
 def delete_category(category_id: int, db: MySQLManager = Depends(get_mysql_service)):
     """Delete a category."""
+    if db is None:
+        raise HTTPException(status_code=503, detail="Database service unavailable")
+    
     try:
         # Check if category exists
         existing = db.get_category(category_id)
@@ -117,5 +131,3 @@ def delete_category(category_id: int, db: MySQLManager = Depends(get_mysql_servi
         if "FOREIGN KEY constraint failed" in str(e) or "Cannot delete" in str(e):
             raise HTTPException(status_code=400, detail="Cannot delete category with existing products")
         raise HTTPException(status_code=500, detail=str(e))
-    finally:
-        db.close()
