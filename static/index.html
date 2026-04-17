@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery Assistant - Product & Category Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">🛒 Grocery Assistant</h1>
+                <p class="subtitle">Manage your grocery products and categories effortlessly</p>
+            </div>
+            <div class="header-status">
+                <div class="status-indicator" id="statusIndicator">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Checking connection...</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <button class="nav-tab active" data-tab="dashboard">📊 Dashboard</button>
+            <button class="nav-tab" data-tab="categories">📁 Categories</button>
+            <button class="nav-tab" data-tab="products">📦 Products</button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Tab -->
+            <section id="dashboard" class="tab-content active">
+                <div class="dashboard-grid">
+                    <div class="stats-card">
+                        <h3>Total Categories</h3>
+                        <p class="stat-number" id="totalCategories">0</p>
+                    </div>
+                    <div class="stats-card">
+                        <h3>Total Products</h3>
+                        <p class="stat-number" id="totalProducts">0</p>
+                    </div>
+                    <div class="stats-card">
+                        <h3>Active Products</h3>
+                        <p class="stat-number" id="activeProducts">0</p>
+                    </div>
+                    <div class="stats-card">
+                        <h3>Total Stock Value</h3>
+                        <p class="stat-number" id="totalStockValue">$0.00</p>
+                    </div>
+                </div>
+
+                <div class="recent-section">
+                    <h2>Recent Products</h2>
+                    <div id="recentProductsContainer" class="products-list">
+                        <p class="empty-state">No products yet. Create your first product!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Categories Tab -->
+            <section id="categories" class="tab-content">
+                <div class="section-header">
+                    <h2>Category Management</h2>
+                    <button class="btn btn-primary" id="addCategoryBtn">+ Add Category</button>
+                </div>
+
+                <div id="categoriesContainer" class="categories-grid">
+                    <p class="empty-state">No categories yet. Create your first category!</p>
+                </div>
+            </section>
+
+            <!-- Products Tab -->
+            <section id="products" class="tab-content">
+                <div class="section-header">
+                    <h2>Product Management</h2>
+                    <button class="btn btn-primary" id="addProductBtn">+ Add Product</button>
+                </div>
+
+                <div class="filters">
+                    <input type="text" id="searchProducts" class="search-input" placeholder="Search products...">
+                    <select id="filterCategory" class="filter-select">
+                        <option value="">All Categories</option>
+                    </select>
+                    <select id="filterStatus" class="filter-select">
+                        <option value="">All Status</option>
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                    </select>
+                </div>
+
+                <div id="productsContainer" class="products-table">
+                    <p class="empty-state">No products yet. Create your first product!</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal: Add/Edit Category -->
+    <div id="categoryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="categoryModalTitle">Add Category</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="categoryForm" class="form">
+                <input type="hidden" id="categoryId">
+                <div class="form-group">
+                    <label for="categoryName">Category Name *</label>
+                    <input type="text" id="categoryName" required placeholder="e.g., Vegetables">
+                </div>
+                <div class="form-group">
+                    <label for="categoryDescription">Description</label>
+                    <textarea id="categoryDescription" placeholder="Brief description..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Category</button>
+                    <button type="button" class="btn btn-secondary" id="categoryModalClose">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Add/Edit Product -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="productModalTitle">Add Product</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="productForm" class="form">
+                <input type="hidden" id="productId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productName">Product Name *</label>
+                        <input type="text" id="productName" required placeholder="e.g., Fresh Apples">
+                    </div>
+                    <div class="form-group">
+                        <label for="productCategory">Category *</label>
+                        <select id="productCategory" required></select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productUnit">Unit *</label>
+                        <select id="productUnit" required>
+                            <option value="pcs">Pieces</option>
+                            <option value="kg">Kilograms</option>
+                            <option value="g">Grams</option>
+                            <option value="l">Liters</option>
+                            <option value="ml">Milliliters</option>
+                            <option value="pack">Pack</option>
+                            <option value="box">Box</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="productPrice">Selling Price ($) *</label>
+                        <input type="number" id="productPrice" required step="0.01" placeholder="0.00">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productStock">Stock Quantity *</label>
+                        <input type="number" id="productStock" required step="0.001" value="0" placeholder="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="productActive">Status</label>
+                        <select id="productActive">
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="productDescription">Description</label>
+                    <textarea id="productDescription" placeholder="Product details..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Product</button>
+                    <button type="button" class="btn btn-secondary" id="productModalClose">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

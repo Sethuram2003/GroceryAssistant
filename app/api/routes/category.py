@@ -1,11 +1,13 @@
 from fastapi import APIRouter, HTTPException, Depends
 from typing import Optional, List
 import os
+import logging
 from app.core.mysql_database.mysql_manager import MySQLManager
 from app.core.mysql_database.mysql_service import get_mysql_service
 from pydantic import BaseModel
 
 router = APIRouter(prefix="/categories", tags=["categories"])
+logger = logging.getLogger(__name__)
 
 
 class CategoryCreate(BaseModel):
@@ -48,6 +50,26 @@ def create_category(category: CategoryCreate, db: MySQLManager = Depends(get_mys
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@router.get("/", response_model=List[CategoryResponse])
+def get_all_categories(db: MySQLManager = Depends(get_mysql_service)):
+    """Get all categories."""
+    if db is None:
+        logger.error("Database service is None")
+        raise HTTPException(status_code=503, detail="Database service unavailable")
+    
+    try:
+        results = db.get_all_categories()
+        logger.info(f"Retrieved {len(results)} categories")
+        return results
+    except Exception as e:
+        logger.error(f"Error retrieving categories: {e}", exc_info=True)
+        # Check if it's a connection error
+        error_msg = str(e).lower()
+        if "connection" in error_msg or "ssl" in error_msg or "lost" in error_msg:
+            raise HTTPException(status_code=503, detail="Database connection lost")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @router.get("/{category_id}", response_model=CategoryResponse)
 def get_category(category_id: int, db: MySQLManager = Depends(get_mysql_service)):
     """Get a category by ID."""
@@ -61,19 +83,6 @@ def get_category(category_id: int, db: MySQLManager = Depends(get_mysql_service)
         return result
     except HTTPException:
         raise
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@router.get("/", response_model=List[CategoryResponse])
-def get_all_categories(db: MySQLManager = Depends(get_mysql_service)):
-    """Get all categories."""
-    if db is None:
-        raise HTTPException(status_code=503, detail="Database service unavailable")
-    
-    try:
-        results = db.get_all_categories()
-        return results
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

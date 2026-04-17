@@ -2,11 +2,13 @@ from fastapi import APIRouter, HTTPException, Depends, Query
 from typing import Optional, List
 from datetime import datetime
 import os
+import logging
 from app.core.mysql_database.mysql_service import get_mysql_service
 from app.core.mysql_database.mysql_manager import MySQLManager
 from pydantic import BaseModel
 
 router = APIRouter(prefix="/products", tags=["products"])
+logger = logging.getLogger(__name__)
 
 
 class ProductCreate(BaseModel):
@@ -71,6 +73,30 @@ def create_product(product: ProductCreate, db: MySQLManager = Depends(get_mysql_
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@router.get("/", response_model=List[ProductResponse])
+def get_all_products(
+    category_id: Optional[int] = Query(None, description="Filter by category ID"),
+    is_active: Optional[int] = Query(None, description="Filter by active status (0 or 1)"),
+    db: MySQLManager = Depends(get_mysql_service)
+):
+    """Get all products with optional filtering."""
+    if db is None:
+        logger.error("Database service is None")
+        raise HTTPException(status_code=503, detail="Database service unavailable")
+    
+    try:
+        results = db.get_all_products(category_id=category_id, is_active=is_active)
+        logger.info(f"Retrieved {len(results)} products")
+        return results
+    except Exception as e:
+        logger.error(f"Error retrieving products: {e}", exc_info=True)
+        # Check if it's a connection error
+        error_msg = str(e).lower()
+        if "connection" in error_msg or "ssl" in error_msg or "lost" in error_msg:
+            raise HTTPException(status_code=503, detail="Database connection lost")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @router.get("/{product_id}", response_model=ProductResponse)
 def get_product(product_id: int, db: MySQLManager = Depends(get_mysql_service)):
     """Get a product by ID."""
@@ -84,23 +110,6 @@ def get_product(product_id: int, db: MySQLManager = Depends(get_mysql_service)):
         return result
     except HTTPException:
         raise
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@router.get("/", response_model=List[ProductResponse])
-def get_all_products(
-    category_id: Optional[int] = Query(None, description="Filter by category ID"),
-    is_active: Optional[int] = Query(None, description="Filter by active status (0 or 1)"),
-    db: MySQLManager = Depends(get_mysql_service)
-):
-    """Get all products with optional filtering."""
-    if db is None:
-        raise HTTPException(status_code=503, detail="Database service unavailable")
-    
-    try:
-        results = db.get_all_products(category_id=category_id, is_active=is_active)
-        return results
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
