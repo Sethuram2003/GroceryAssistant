@@ -1,0 +1,16 @@
+category_name,category_description,product_name,product_description,unit,stock_quantity,selling_price,is_active
+Fruits,Fresh and seasonal fruits,Apple,Red delicious apples,kg,25.500,3.99,1
+Fruits,Fresh and seasonal fruits,Banana,Ripe Cavendish bananas,kg,40.200,2.49,1
+Fruits,Fresh and seasonal fruits,Orange,Navel oranges,kg,18.750,4.29,1
+Vegetables,Organic and locally grown vegetables,Tomato,Vine-ripened tomatoes,kg,32.000,3.79,1
+Vegetables,Organic and locally grown vegetables,Carrot,Organic carrots,kg,15.300,2.89,1
+Vegetables,Organic and locally grown vegetables,Broccoli,Fresh broccoli heads,pcs,45,1.99,1
+Dairy,"Milk, cheese, yogurt and other dairy products",Milk 2%,2% reduced fat milk,l,120.000,3.49,1
+Dairy,"Milk, cheese, yogurt and other dairy products",Cheddar Cheese,Aged cheddar block,kg,8.500,14.99,1
+Dairy,"Milk, cheese, yogurt and other dairy products",Greek Yogurt,Plain Greek yogurt,pcs,95,5.49,1
+Bakery,"Bread, pastries and baked goods",Whole Wheat Bread,Whole grain sliced bread,pcs,60,3.29,1
+Bakery,"Bread, pastries and baked goods",Croissant,Butter croissant,pcs,80,2.49,1
+Beverages,"Soft drinks, juices, coffee and tea",Orange Juice,Fresh squeezed orange juice,l,35.000,4.99,1
+Beverages,"Soft drinks, juices, coffee and tea",Ground Coffee,Medium roast ground coffee,kg,12.200,18.99,1
+Pantry,"Canned goods, pasta, rice and cooking essentials",Pasta,Penne pasta,kg,50.000,2.79,1
+Pantry,"Canned goods, pasta, rice and cooking essentials",Canned Tomatoes,Whole peeled tomatoes,pcs,120,1.89,1

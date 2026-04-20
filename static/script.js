@@ -6,6 +6,7 @@ let categories = [];
 let products = [];
 let currentEditingCategoryId = null;
 let currentEditingProductId = null;
+let selectedCsvFile = null;
 
 // ============= Initialization =============
 document.addEventListener('DOMContentLoaded', () => {
@@ -50,38 +51,23 @@ function initializeEventListeners() {
         }
     });
 
-    // Filters
+    // Product filters
     document.getElementById('searchProducts').addEventListener('input', filterProducts);
     document.getElementById('filterCategory').addEventListener('change', filterProducts);
     document.getElementById('filterStatus').addEventListener('change', filterProducts);
 
-    // Chat events
-    const sendChatBtn = document.getElementById('sendChatBtn');
-    const chatInput = document.getElementById('chatInput');
-    
-    if (sendChatBtn) {
-        sendChatBtn.addEventListener('click', () => {
-            console.log('💬 Send button clicked!');
+    // Chat
+    document.getElementById('sendChatBtn').addEventListener('click', sendChatMessage);
+    document.getElementById('chatInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
             sendChatMessage();
-        });
-        console.log('✓ Send button listener attached');
-    } else {
-        console.error('❌ Send button (#sendChatBtn) not found!');
-    }
+        }
+    });
+    console.log('✓ Chat listeners attached');
     
-    if (chatInput) {
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                console.log('💬 Enter key pressed in chat input!');
-                sendChatMessage();
-            }
-        });
-        console.log('✓ Chat input listener attached');
-    } else {
-        console.error('❌ Chat input (#chatInput) not found!');
-    }
-    
-    console.log('✅ All event listeners initialized successfully');
+    // Import CSV Tab
+    initializeImportTab();
+    console.log('✓ Import tab listeners attached');
 }
 
 // ============= Connection Check =============
@@ -638,7 +624,27 @@ function addChatMessage(text, sender = 'user') {
         
         if (sender === 'assistant-loading') {
             bubble.innerHTML = '<span class="chat-loading">Thinking<span></span></span>';
+        } else if (sender === 'assistant') {
+            // Parse markdown for bot messages
+            try {
+                // Configure marked options
+                marked.setOptions({
+                    breaks: true,
+                    gfm: true,
+                    headerIds: false,
+                    mangle: false,
+                });
+                
+                const htmlContent = marked.parse(text);
+                bubble.innerHTML = `<div class="markdown-content">${htmlContent}</div>`;
+            } catch (e) {
+                console.error('Markdown parsing error:', e);
+                const p = document.createElement('p');
+                p.textContent = text;
+                bubble.appendChild(p);
+            }
         } else {
+            // Plain text for user messages
             const p = document.createElement('p');
             p.textContent = text;
             bubble.appendChild(p);
@@ -675,3 +681,370 @@ function removeLastMessage() {
     }
 }
 
+// ============= CSV Import Functionality =============
+function initializeImportTab() {
+    console.log('🔧 Initializing Import Tab listeners...');
+    
+    // File upload area
+    const uploadArea = document.getElementById('uploadArea');
+    const csvFileInput = document.getElementById('csvFileInput');
+    const browseFileBtn = document.getElementById('browseFileBtn');
+    const validateCsvBtn = document.getElementById('validateCsvBtn');
+    
+    if (!uploadArea || !csvFileInput || !browseFileBtn) {
+        console.warn('⚠️ Import tab elements not found');
+        return;
+    }
+    
+    // Browse button click
+    browseFileBtn.addEventListener('click', () => {
+        csvFileInput.click();
+    });
+    
+    // File input change
+    csvFileInput.addEventListener('change', (e) => {
+        handleFileSelect(e.target.files[0]);
+    });
+    
+    // Upload area drag and drop
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+    });
+    
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('dragover');
+    });
+    
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+        if (e.dataTransfer.files.length > 0) {
+            handleFileSelect(e.dataTransfer.files[0]);
+        }
+    });
+    
+    // Click on upload area
+    uploadArea.addEventListener('click', () => {
+        csvFileInput.click();
+    });
+    
+    // Validate button
+    if (validateCsvBtn) {
+        validateCsvBtn.addEventListener('click', validateCsv);
+    }
+    
+    // Import button
+    const importCsvBtn = document.getElementById('importCsvBtn');
+    if (importCsvBtn) {
+        importCsvBtn.addEventListener('click', importCsv);
+    }
+    
+    // Import another button
+    const importAnotherBtn = document.getElementById('importAnotherBtn');
+    if (importAnotherBtn) {
+        importAnotherBtn.addEventListener('click', resetImportTab);
+    }
+    
+    // View dashboard button
+    const viewDashboardBtn = document.getElementById('viewDashboardBtn');
+    if (viewDashboardBtn) {
+        viewDashboardBtn.addEventListener('click', () => {
+            switchTab({ target: document.querySelector('[data-tab="dashboard"]') });
+        });
+    }
+    
+    // Download template button
+    const downloadTemplateBtn = document.getElementById('downloadTemplateBtn');
+    if (downloadTemplateBtn) {
+        downloadTemplateBtn.addEventListener('click', downloadCsvTemplate);
+    }
+    
+    console.log('✓ Import Tab listeners attached');
+}
+
+function handleFileSelect(file) {
+    if (!file) return;
+    
+    if (file.type !== 'text/csv' && !file.name.endsWith('.csv')) {
+        showToast('Please select a valid CSV file', 'error');
+        return;
+    }
+    
+    selectedCsvFile = file;
+    const uploadArea = document.getElementById('uploadArea');
+    const validateCsvBtn = document.getElementById('validateCsvBtn');
+    
+    // Update UI to show file selected
+    uploadArea.innerHTML = `
+        <div class="upload-icon">✅</div>
+        <h3>File Selected!</h3>
+        <p>${file.name}</p>
+        <p style="color: var(--gray-600); font-size: 0.85em;">Ready to validate</p>
+    `;
+    
+    // Enable validate button
+    if (validateCsvBtn) {
+        validateCsvBtn.disabled = false;
+        // Re-attach click listener in case it was lost
+        validateCsvBtn.onclick = validateCsv;
+    }
+    
+    console.log('📁 File selected:', file.name);
+}
+
+async function validateCsv() {
+    console.log('Starting validation, selectedCsvFile:', selectedCsvFile);
+    
+    if (!selectedCsvFile) {
+        showToast('Please select a CSV file first', 'error');
+        return;
+    }
+    
+    try {
+        const formData = new FormData();
+        formData.append('file', selectedCsvFile);
+        
+        console.log('🔍 Validating CSV...');
+        const url = `${API_BASE_URL}/api/import-csv/validate`;
+        console.log('Request URL:', url);
+        
+        const response = await fetch(url, {
+            method: 'POST',
+            body: formData
+        });
+        
+        console.log('Validation response status:', response.status);
+        
+        if (!response.ok) {
+            const error = await response.json();
+            console.error('Validation error:', error);
+            showToast(error.detail || 'Validation failed', 'error');
+            return;
+        }
+        
+        const data = await response.json();
+        console.log('✅ Validation result:', data);
+        
+        displayValidationResults(data);
+        
+    } catch (error) {
+        console.error('❌ Validation error:', error);
+        showToast('Error validating CSV: ' + error.message, 'error');
+    }
+}
+
+function displayValidationResults(data) {
+    const validationSection = document.getElementById('validationResultsSection');
+    const validationStatus = document.getElementById('validationStatus');
+    const validationRowCount = document.getElementById('validationRowCount');
+    const validationCategoryCount = document.getElementById('validationCategoryCount');
+    const validationCategories = document.getElementById('validationCategories');
+    const validationErrorsSection = document.getElementById('validationErrorsSection');
+    const validationErrors = document.getElementById('validationErrors');
+    const validationSuccessSection = document.getElementById('validationSuccessSection');
+    const importButtonSection = document.getElementById('importButtonSection');
+    
+    // Show validation section
+    validationSection.style.display = 'block';
+    
+    // Update status badge
+    const isValid = data.status === 'valid';
+    validationStatus.textContent = isValid ? '✅ Valid' : '❌ Invalid';
+    validationStatus.className = isValid ? 'validation-badge valid' : 'validation-badge invalid';
+    
+    // Update counts
+    validationRowCount.textContent = data.row_count || 0;
+    validationCategoryCount.textContent = data.unique_categories || 0;
+    
+    // Display categories as tags/chips
+    if (data.categories && data.categories.length > 0) {
+        validationCategories.innerHTML = data.categories.map(cat => 
+            `<span class="category-tag">${cat}</span>`
+        ).join('');
+    } else {
+        validationCategories.textContent = '-';
+    }
+    
+    // Handle errors
+    if (data.validation_errors && data.validation_errors.length > 0) {
+        validationErrorsSection.style.display = 'block';
+        validationSuccessSection.style.display = 'none';
+        validationErrors.innerHTML = data.validation_errors.map(error => 
+            `<div>${error}</div>`
+        ).join('');
+        importButtonSection.style.display = 'none';
+    } else {
+        validationErrorsSection.style.display = 'none';
+        validationSuccessSection.style.display = 'block';
+        importButtonSection.style.display = 'block';
+    }
+    
+    // Scroll to results
+    validationSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+async function importCsv() {
+    if (!selectedCsvFile) {
+        showToast('Please select a CSV file first', 'error');
+        return;
+    }
+    
+    try {
+        const formData = new FormData();
+        formData.append('file', selectedCsvFile);
+        
+        console.log('🚀 Starting CSV import...');
+        
+        // Hide validation and import button sections
+        const validationSection = document.getElementById('validationResultsSection');
+        const importButtonSection = document.getElementById('importButtonSection');
+        const progressSection = document.getElementById('importProgressSection');
+        
+        if (validationSection) validationSection.style.display = 'none';
+        if (importButtonSection) importButtonSection.style.display = 'none';
+        
+        // Show progress section
+        if (progressSection) progressSection.style.display = 'block';
+        
+        // Simulate progress
+        const progressFill = document.getElementById('progressFill');
+        let progress = 0;
+        const progressInterval = setInterval(() => {
+            if (progress < 90) {
+                progress += Math.random() * 30;
+                if (progressFill) {
+                    progressFill.style.width = progress + '%';
+                }
+            }
+        }, 500);
+        
+        const url = `${API_BASE_URL}/api/import-csv`;
+        console.log('Import request URL:', url);
+        
+        const response = await fetch(url, {
+            method: 'POST',
+            body: formData
+        });
+        
+        clearInterval(progressInterval);
+        if (progressFill) {
+            progressFill.style.width = '100%';
+        }
+        
+        console.log('Import response status:', response.status);
+        
+        if (!response.ok) {
+            const error = await response.json();
+            console.error('Import error:', error);
+            showToast(error.detail || 'Import failed', 'error');
+            if (progressSection) progressSection.style.display = 'none';
+            if (importButtonSection) importButtonSection.style.display = 'block';
+            return;
+        }
+        
+        const data = await response.json();
+        console.log('✅ Import result:', data);
+        
+        // Display success
+        displayImportSuccess(data);
+        
+        // Reload dashboard data
+        loadDashboard();
+        
+    } catch (error) {
+        console.error('❌ Import error:', error);
+        showToast('Error importing CSV: ' + error.message, 'error');
+        const progressSection = document.getElementById('importProgressSection');
+        const importButtonSection = document.getElementById('importButtonSection');
+        if (progressSection) progressSection.style.display = 'none';
+        if (importButtonSection) importButtonSection.style.display = 'block';
+    }
+}
+
+function displayImportSuccess(data) {
+    const progressSection = document.getElementById('importProgressSection');
+    const successSection = document.getElementById('importSuccessSection');
+    const successCategoriesCount = document.getElementById('successCategoriesCount');
+    const successProductsCount = document.getElementById('successProductsCount');
+    const importErrorsList = document.getElementById('importErrorsList');
+    const importErrors = document.getElementById('importErrors');
+    
+    progressSection.style.display = 'none';
+    successSection.style.display = 'block';
+    
+    successCategoriesCount.textContent = data.categories_created || 0;
+    successProductsCount.textContent = data.products_created || 0;
+    
+    // Show errors if any
+    if (data.errors && data.errors.length > 0) {
+        importErrorsList.style.display = 'block';
+        importErrors.innerHTML = data.errors.map(error => 
+            `<div>${error}</div>`
+        ).join('');
+    } else {
+        importErrorsList.style.display = 'none';
+    }
+    
+    showToast(`✅ Import successful! ${data.products_created} products created`, 'success');
+}
+
+function resetImportTab() {
+    selectedCsvFile = null;
+    const csvFileInput = document.getElementById('csvFileInput');
+    const uploadArea = document.getElementById('uploadArea');
+    const validateCsvBtn = document.getElementById('validateCsvBtn');
+    
+    // Reset file input
+    if (csvFileInput) {
+        csvFileInput.value = '';
+    }
+    
+    // Reset upload area
+    if (uploadArea) {
+        uploadArea.innerHTML = `
+            <div class="upload-icon">📄</div>
+            <h3>Drop your CSV file here</h3>
+            <p>or click to browse</p>
+        `;
+        uploadArea.classList.remove('dragover');
+    }
+    
+    // Reset buttons
+    if (validateCsvBtn) {
+        validateCsvBtn.disabled = true;
+    }
+    
+    // Hide all sections
+    const validationSection = document.getElementById('validationResultsSection');
+    const importButtonSection = document.getElementById('importButtonSection');
+    const progressSection = document.getElementById('importProgressSection');
+    const successSection = document.getElementById('importSuccessSection');
+    
+    if (validationSection) validationSection.style.display = 'none';
+    if (importButtonSection) importButtonSection.style.display = 'none';
+    if (progressSection) progressSection.style.display = 'none';
+    if (successSection) successSection.style.display = 'none';
+    
+    console.log('🔄 Import tab reset');
+}
+
+function downloadCsvTemplate() {
+    const template = `category_name,category_description,product_name,product_description,unit,stock_quantity,selling_price,is_active
+Fruits,Fresh and seasonal fruits,Apple,Red delicious apples,kg,25.5,3.99,1
+Fruits,Fresh and seasonal fruits,Banana,Ripe Cavendish bananas,kg,40.2,2.49,1
+Vegetables,"Organic and locally grown vegetables",Tomato,Vine-ripened tomatoes,kg,32.0,3.79,1
+Dairy,"Milk, cheese, yogurt and other dairy products",Milk 2%,2% reduced fat milk,l,120.0,3.49,1
+Beverages,"Soft drinks, juices, coffee and tea",Orange Juice,Fresh orange juice,l,35.0,4.99,1`;
+
+    const element = document.createElement('a');
+    element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(template));
+    element.setAttribute('download', 'grocery_template.csv');
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+    
+    showToast('✅ Template downloaded successfully!', 'success');
+    console.log('⬇️ CSV template downloaded');
+}

@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grocery Assistant - Product & Category Manager</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Markdown Parser Library -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -27,6 +29,7 @@
             <button class="nav-tab active" data-tab="dashboard">📊 Dashboard</button>
             <button class="nav-tab" data-tab="categories">📁 Categories</button>
             <button class="nav-tab" data-tab="products">📦 Products</button>
+            <button class="nav-tab" data-tab="import">📥 Import CSV</button>
             <button class="nav-tab" data-tab="chat">💬 Chat Assistant</button>
         </nav>
 
@@ -94,6 +97,188 @@
 
                 <div id="productsContainer" class="products-table">
                     <p class="empty-state">No products yet. Create your first product!</p>
+                </div>
+            </section>
+
+            <!-- Import CSV Tab -->
+            <section id="import" class="tab-content">
+                <div class="section-header">
+                    <h2>📥 Import Inventory Data</h2>
+                    <p class="subtitle-text">Upload a CSV file to quickly populate your inventory with categories and products</p>
+                </div>
+
+                <div class="import-container">
+                    <!-- File Upload Section -->
+                    <div class="import-upload-section">
+                        <div class="upload-card">
+                            <div class="upload-area" id="uploadArea">
+                                <div class="upload-icon">📄</div>
+                                <h3>Drop your CSV file here</h3>
+                                <p>or click to browse from your computer</p>
+                                <input 
+                                    type="file" 
+                                    id="csvFileInput" 
+                                    accept=".csv" 
+                                    style="display: none;"
+                                >
+                            </div>
+                            <div class="upload-buttons">
+                                <button class="btn btn-primary" id="browseFileBtn">📂 Browse Files</button>
+                                <button class="btn btn-secondary" id="validateCsvBtn" disabled>✓ Validate CSV</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Validation Results Section -->
+                    <div id="validationResultsSection" class="validation-results-section" style="display: none;">
+                        <div class="validation-card">
+                            <div class="validation-header">
+                                <div class="validation-title-area">
+                                    <h3>Validation Results</h3>
+                                    <span class="validation-badge" id="validationStatus"></span>
+                                </div>
+                            </div>
+
+                            <div class="validation-details">
+                                <div class="validation-stat">
+                                    <div class="validation-icon">📊</div>
+                                    <div class="validation-info">
+                                        <span class="validation-label">Total Rows</span>
+                                        <span class="validation-value" id="validationRowCount">0</span>
+                                    </div>
+                                </div>
+                                <div class="validation-stat">
+                                    <div class="validation-icon">📁</div>
+                                    <div class="validation-info">
+                                        <span class="validation-label">Unique Categories</span>
+                                        <span class="validation-value" id="validationCategoryCount">0</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="categories-found">
+                                <p class="categories-label">Categories Found:</p>
+                                <div id="validationCategories" class="categories-list">-</div>
+                            </div>
+
+                            <!-- Errors Display -->
+                            <div id="validationErrorsSection" style="display: none;">
+                                <h4 class="error-title">❌ Validation Errors:</h4>
+                                <div id="validationErrors" class="error-list"></div>
+                            </div>
+
+                            <!-- Success Message -->
+                            <div id="validationSuccessSection" style="display: none;">
+                                <p class="success-message">✅ CSV is valid and ready to import!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Import Button -->
+                    <div id="importButtonSection" style="display: none;" class="import-button-section">
+                        <button class="btn btn-success btn-large" id="importCsvBtn">🚀 Import Data to Database</button>
+                        <p class="import-note">This will create categories and products in your database.</p>
+                    </div>
+
+                    <!-- Import Progress Section -->
+                    <div id="importProgressSection" style="display: none;" class="import-progress-section">
+                        <div class="progress-card">
+                            <h3>⏳ Importing Data...</h3>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                            <div class="progress-stats">
+                                <div class="progress-stat">
+                                    <span class="progress-label">Categories</span>
+                                    <span class="progress-count" id="importCategoriesCount">0</span>
+                                </div>
+                                <div class="progress-stat">
+                                    <span class="progress-label">Products</span>
+                                    <span class="progress-count" id="importProductsCount">0</span>
+                                </div>
+                            </div>
+                            <div id="importErrorsList" style="display: none;">
+                                <h4>⚠️ Issues During Import:</h4>
+                                <div id="importErrors" class="error-list"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Import Success Section -->
+                    <div id="importSuccessSection" style="display: none;" class="import-success-section">
+                        <div class="success-card">
+                            <div class="success-icon">✅</div>
+                            <h3>Import Successful!</h3>
+                            <div class="success-stats">
+                                <div class="stat-item">
+                                    <span class="stat-label">Categories Created:</span>
+                                    <span class="stat-value" id="successCategoriesCount">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Products Created:</span>
+                                    <span class="stat-value" id="successProductsCount">0</span>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" id="viewDashboardBtn">📊 View Dashboard</button>
+                            <button class="btn btn-secondary" id="importAnotherBtn">📥 Import Another File</button>
+                        </div>
+                    </div>
+
+                    <!-- CSV Template Section -->
+                    <div class="csv-template-section">
+                        <div class="template-card">
+                            <h3>📋 CSV Format Guide</h3>
+                            <p>Your CSV file should have these columns in this order:</p>
+                            <div class="template-table">
+                                <div class="template-row header">
+                                    <div class="col-name">Column Name</div>
+                                    <div class="col-type">Data Type</div>
+                                    <div class="col-example">Example Value</div>
+                                </div>
+                                <div class="template-row">
+                                    <div class="col-name">category_name</div>
+                                    <div class="col-type">Text</div>
+                                    <div class="col-example">Fruits</div>
+                                </div>
+                                <div class="template-row">
+                                    <div class="col-name">category_description</div>
+                                    <div class="col-type">Text</div>
+                                    <div class="col-example">Fresh and seasonal fruits</div>
+                                </div>
+                                <div class="template-row">
+                                    <div class="col-name">product_name</div>
+                                    <div class="col-type">Text</div>
+                                    <div class="col-example">Apple</div>
+                                </div>
+                                <div class="template-row">
+                                    <div class="col-name">product_description</div>
+                                    <div class="col-type">Text</div>
+                                    <div class="col-example">Red delicious apples</div>
+                                </div>
+                                <div class="template-row">
+                                    <div class="col-name">unit</div>
+                                    <div class="col-type">Text</div>
+                                    <div class="col-example">kg</div>
+                                </div>
+                                <div class="template-row">
+                                    <div class="col-name">stock_quantity</div>
+                                    <div class="col-type">Number</div>
+                                    <div class="col-example">25.5</div>
+                                </div>
+                                <div class="template-row">
+                                    <div class="col-name">selling_price</div>
+                                    <div class="col-type">Number</div>
+                                    <div class="col-example">3.99</div>
+                                </div>
+                                <div class="template-row">
+                                    <div class="col-name">is_active</div>
+                                    <div class="col-type">Number (0/1)</div>
+                                    <div class="col-example">1</div>
+                                </div>
+                            </div>
+                            <button class="btn btn-secondary" id="downloadTemplateBtn">⬇️ Download CSV Template</button>
+                        </div>
+                    </div>
                 </div>
             </section>
 
