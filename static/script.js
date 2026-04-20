@@ -51,6 +51,22 @@ function initializeEventListeners() {
         }
     });
 
+    // Category products modal buttons
+    const categoryProductsModalClose = document.getElementById('categoryProductsModalClose');
+    if (categoryProductsModalClose) {
+        categoryProductsModalClose.addEventListener('click', () => {
+            document.getElementById('categoryProductsModal').classList.remove('active');
+        });
+    }
+    const categoryProductsModal = document.getElementById('categoryProductsModal');
+    if (categoryProductsModal) {
+        categoryProductsModal.addEventListener('click', (e) => {
+            if (e.target === categoryProductsModal) {
+                categoryProductsModal.classList.remove('active');
+            }
+        });
+    }
+
     // Product filters
     document.getElementById('searchProducts').addEventListener('input', filterProducts);
     document.getElementById('filterCategory').addEventListener('change', filterProducts);
@@ -212,18 +228,21 @@ function displayCategories() {
     container.innerHTML = categories.map(category => {
         const categoryProducts = products.filter(p => p.category_id === category.id);
         return `
-            <div class="category-card">
-                <h3>📁 ${category.name}</h3>
-                <p>${category.description || 'No description'}</p>
-                <div class="category-stats">
-                    <div class="category-stat">
-                        <div class="category-stat-value">${categoryProducts.length}</div>
-                        <div class="category-stat-label">Products</div>
+            <div class="category-card" onclick="viewCategoryProducts(${category.id})" style="cursor: pointer;">
+                <div class="category-card-content">
+                    <h3>📁 ${category.name}</h3>
+                    <p>${category.description || 'No description'}</p>
+                    <div class="category-stats">
+                        <div class="category-stat">
+                            <div class="category-stat-value">${categoryProducts.length}</div>
+                            <div class="category-stat-label">Products</div>
+                        </div>
                     </div>
+                    <p class="click-hint">� Click to view products</p>
                 </div>
                 <div class="category-actions">
-                    <button class="btn-edit" onclick="editCategory(${category.id})">Edit</button>
-                    <button class="btn-delete" onclick="deleteCategory(${category.id})">Delete</button>
+                    <button class="btn-edit" onclick="editCategory(${category.id}); event.stopPropagation();">Edit</button>
+                    <button class="btn-delete" onclick="deleteCategory(${category.id}); event.stopPropagation();">Delete</button>
                 </div>
             </div>
         `;
@@ -241,6 +260,61 @@ function openCategoryModal() {
 function closeCategoryModal() {
     document.getElementById('categoryModal').classList.remove('active');
     document.getElementById('categoryForm').reset();
+}
+
+function viewCategoryProducts(categoryId) {
+    const category = categories.find(c => c.id === categoryId);
+    if (!category) return;
+
+    // First, load all products to ensure they're available
+    async function loadAndFilter() {
+        try {
+            // Fetch products fresh from the server
+            const response = await fetch(`${API_BASE_URL}/products/`);
+            if (!response.ok) {
+                showToast('Error loading products', 'error');
+                return;
+            }
+            
+            products = await response.json();
+            
+            // Switch to the products tab
+            const productsTab = document.querySelector('[data-tab="products"]');
+            if (productsTab) {
+                document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+                productsTab.classList.add('active');
+                
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                document.getElementById('products').classList.add('active');
+            }
+            
+            // Set the filter to the selected category
+            document.getElementById('filterCategory').value = categoryId;
+            
+            // Reset search and status filters
+            document.getElementById('searchProducts').value = '';
+            document.getElementById('filterStatus').value = '';
+            
+            // Apply the filter
+            filterProducts();
+            
+            // Scroll to products container
+            const productsContainer = document.getElementById('productsContainer');
+            if (productsContainer) {
+                setTimeout(() => {
+                    productsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            }
+            
+            // Show a toast notification
+            showToast(`Filtered by category: ${category.name}`, 'success');
+        } catch (error) {
+            console.error('Error loading and filtering products:', error);
+            showToast('Error loading products', 'error');
+        }
+    }
+    
+    loadAndFilter();
 }
 
 function editCategory(id) {

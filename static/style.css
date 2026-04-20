@@ -255,11 +255,36 @@ body {
     padding: 20px;
     transition: all 0.3s ease;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.category-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.category-card:hover::before {
+    transform: scaleX(1);
 }
 
 .category-card:hover {
     border-color: var(--primary-color);
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+    box-shadow: 0 8px 16px rgba(16, 185, 129, 0.15);
+    transform: translateY(-4px);
+}
+
+.category-card-content {
+    flex: 1;
 }
 
 .category-card h3 {
@@ -273,6 +298,22 @@ body {
     font-size: 0.95em;
     margin-bottom: 15px;
     min-height: 40px;
+}
+
+.click-hint {
+    color: var(--primary-color);
+    font-size: 0.85em;
+    font-weight: 500;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    animation: pulse-hint 2s infinite;
+}
+
+@keyframes pulse-hint {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
 }
 
 .category-stats {
@@ -303,6 +344,7 @@ body {
 .category-actions {
     display: flex;
     gap: 10px;
+    margin-top: auto;
 }
 
 .category-actions button {
@@ -610,6 +652,16 @@ body {
     box-shadow: var(--box-shadow-lg);
 }
 
+.modal-content.large-modal {
+    max-width: 900px;
+}
+
+.modal-body {
+    padding: 25px;
+    max-height: 75vh;
+    overflow-y: auto;
+}
+
 .modal-header {
     display: flex;
     justify-content: space-between;
@@ -645,6 +697,124 @@ body {
 
 .modal-content .form {
     padding: 25px;
+}
+
+/* Products Modal List */
+.products-modal-list {
+    padding: 0;
+}
+
+.products-modal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.product-modal-card {
+    background: linear-gradient(135deg, #f8f9fa 0%, #f0f4f8 100%);
+    border: 2px solid var(--gray-200);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.product-modal-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+    box-shadow: 0 8px 16px rgba(16, 185, 129, 0.15);
+}
+
+.product-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 12px;
+    gap: 10px;
+}
+
+.product-modal-header h4 {
+    margin: 0;
+    color: var(--gray-900);
+    font-size: 1.1em;
+    flex: 1;
+}
+
+.product-modal-description {
+    color: var(--gray-600);
+    font-size: 0.9em;
+    margin-bottom: 15px;
+    line-height: 1.4;
+    min-height: 40px;
+}
+
+.product-modal-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 15px;
+    padding: 12px;
+    background: white;
+    border-radius: 6px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.detail-label {
+    color: var(--gray-600);
+    font-weight: 500;
+    font-size: 0.75em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.detail-value {
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1.1em;
+}
+
+.product-modal-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+}
+
+.btn-small {
+    padding: 8px 14px;
+    font-size: 0.85em;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    flex: 1;
+    text-align: center;
+}
+
+.btn-edit {
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--secondary-dark) 100%);
+    color: white;
+}
+
+.btn-edit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.btn-delete {
+    background: linear-gradient(135deg, var(--danger-color) 0%, #dc2626 100%);
+    color: white;
+}
+
+.btn-delete:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
 /* Toast Notifications */
