@@ -2,15 +2,279 @@ category_name,category_description,product_name,product_description,unit,stock_q
 Fruits,Fresh and seasonal fruits,Apple,Red delicious apples,kg,25.500,3.99,1
 Fruits,Fresh and seasonal fruits,Banana,Ripe Cavendish bananas,kg,40.200,2.49,1
 Fruits,Fresh and seasonal fruits,Orange,Navel oranges,kg,18.750,4.29,1
+Fruits,Fresh and seasonal fruits,Strawberry,Fresh strawberries,kg,12.800,8.99,1
+Fruits,Fresh and seasonal fruits,Blueberry,Organic blueberries,pint,55,4.99,1
+Fruits,Fresh and seasonal fruits,Pineapple,Golden pineapple,pcs,32,3.49,1
+Fruits,Fresh and seasonal fruits,Mango,Alphonso mangoes,kg,15.300,5.99,1
+Fruits,Fresh and seasonal fruits,Grapes,Seedless green grapes,kg,28.600,4.79,1
+Fruits,Fresh and seasonal fruits,Watermelon,Seedless mini watermelon,pcs,20,6.99,1
+Fruits,Fresh and seasonal fruits,Kiwi,Green kiwi fruit,kg,11.200,3.89,1
+Fruits,Fresh and seasonal fruits,Peach,Fresh yellow peaches,kg,9.500,4.49,1
+Fruits,Fresh and seasonal fruits,Pear,Bartlett pears,kg,14.700,3.29,1
+Fruits,Fresh and seasonal fruits,Lemon,Fresh lemons,kg,22.100,2.99,1
+Fruits,Fresh and seasonal fruits,Avocado,Ripe Hass avocados,pcs,45,1.99,1
+Fruits,Fresh and seasonal fruits,Cherry,Bing cherries,kg,6.300,12.99,1
 Vegetables,Organic and locally grown vegetables,Tomato,Vine-ripened tomatoes,kg,32.000,3.79,1
 Vegetables,Organic and locally grown vegetables,Carrot,Organic carrots,kg,15.300,2.89,1
 Vegetables,Organic and locally grown vegetables,Broccoli,Fresh broccoli heads,pcs,45,1.99,1
+Vegetables,Organic and locally grown vegetables,Spinach,Baby spinach leaves,bag,80,2.99,1
+Vegetables,Organic and locally grown vegetables,Lettuce,Romaine lettuce hearts,pcs,55,2.49,1
+Vegetables,Organic and locally grown vegetables,Cucumber,English cucumbers,pcs,70,1.49,1
+Vegetables,Organic and locally grown vegetables,Bell Pepper,Red bell peppers,kg,18.400,4.99,1
+Vegetables,Organic and locally grown vegetables,Onion,Yellow onions,kg,42.000,1.89,1
+Vegetables,Organic and locally grown vegetables,Potato,Russet potatoes,kg,65.500,1.29,1
+Vegetables,Organic and locally grown vegetables,Garlic,Fresh garlic bulbs,pcs,95,0.79,1
+Vegetables,Organic and locally grown vegetables,Ginger,Fresh ginger root,kg,5.200,5.49,1
+Vegetables,Organic and locally grown vegetables,Zucchini,Green zucchini squash,kg,12.600,3.29,1
+Vegetables,Organic and locally grown vegetables,Eggplant,Globe eggplants,pcs,30,2.79,1
+Vegetables,Organic and locally grown vegetables,Celery,Celery stalks,bunch,40,2.19,1
+Vegetables,Organic and locally grown vegetables,Mushroom,White button mushrooms,kg,10.800,6.99,1
 Dairy,"Milk, cheese, yogurt and other dairy products",Milk 2%,2% reduced fat milk,l,120.000,3.49,1
 Dairy,"Milk, cheese, yogurt and other dairy products",Cheddar Cheese,Aged cheddar block,kg,8.500,14.99,1
 Dairy,"Milk, cheese, yogurt and other dairy products",Greek Yogurt,Plain Greek yogurt,pcs,95,5.49,1
+Dairy,"Milk, cheese, yogurt and other dairy products",Butter,Unsalted butter stick,lb,60,4.99,1
+Dairy,"Milk, cheese, yogurt and other dairy products",Heavy Cream,Fresh heavy whipping cream,ml,35.000,4.29,1
+Dairy,"Milk, cheese, yogurt and other dairy products",Mozzarella,Fresh mozzarella ball,pcs,40,6.49,1
+Dairy,"Milk, cheese, yogurt and other dairy products",Sour Cream,Cultured sour cream,pcs,85,2.89,1
+Dairy,"Milk, cheese, yogurt and other dairy products",Cottage Cheese,Small curd cottage cheese,pcs,50,3.79,1
+Dairy,"Milk, cheese, yogurt and other dairy products",Parmesan,Grated Parmesan cheese,container,30,7.99,1
+Dairy,"Milk, cheese, yogurt and other dairy products",Cream Cheese,Plain cream cheese block,pcs,70,3.29,1
+Dairy,"Milk, cheese, yogurt and other dairy products",Almond Milk,Unsweetened almond milk,l,45.200,3.99,1
+Dairy,"Milk, cheese, yogurt and other dairy products",Goat Cheese,Soft goat cheese log,kg,3.800,22.99,1
+Dairy,"Milk, cheese, yogurt and other dairy products",Ricotta,Whole milk ricotta,pcs,28,4.49,1
 Bakery,"Bread, pastries and baked goods",Whole Wheat Bread,Whole grain sliced bread,pcs,60,3.29,1
 Bakery,"Bread, pastries and baked goods",Croissant,Butter croissant,pcs,80,2.49,1
+Bakery,"Bread, pastries and baked goods",Bagel,Plain bagels,pack of 6,45,3.99,1
+Bakery,"Bread, pastries and baked goods",Sourdough,Artisan sourdough loaf,pcs,35,5.49,1
+Bakery,"Bread, pastries and baked goods",Muffin,Blueberry muffin,pcs,90,1.99,1
+Bakery,"Bread, pastries and baked goods",Danish,Cheese danish pastry,pcs,55,2.29,1
+Bakery,"Bread, pastries and baked goods",Baguette,French baguette,pcs,40,2.99,1
+Bakery,"Bread, pastries and baked goods",Donut,Glazed donut,pcs,120,1.49,1
+Bakery,"Bread, pastries and baked goods",Pita Bread,Whole wheat pita,pack of 5,65,3.49,1
+Bakery,"Bread, pastries and baked goods",Tortilla,Flour tortillas,pack of 10,70,2.79,1
+Bakery,"Bread, pastries and baked goods",Cinnamon Roll,Gourmet cinnamon roll,pcs,50,3.99,1
+Bakery,"Bread, pastries and baked goods",Brownie,Chocolate fudge brownie,pcs,85,2.19,1
 Beverages,"Soft drinks, juices, coffee and tea",Orange Juice,Fresh squeezed orange juice,l,35.000,4.99,1
 Beverages,"Soft drinks, juices, coffee and tea",Ground Coffee,Medium roast ground coffee,kg,12.200,18.99,1
+Beverages,"Soft drinks, juices, coffee and tea",Cola,Classic cola soft drink,can,250,0.99,1
+Beverages,"Soft drinks, juices, coffee and tea",Sparkling Water,Lemon flavored sparkling water,can,180,1.29,1
+Beverages,"Soft drinks, juices, coffee and tea",Green Tea,Organic green tea bags,box of 20,95,4.49,1
+Beverages,"Soft drinks, juices, coffee and tea",Apple Juice,100% apple juice,l,42.500,3.79,1
+Beverages,"Soft drinks, juices, coffee and tea",Energy Drink,Sugar-free energy drink,can,120,2.99,1
+Beverages,"Soft drinks, juices, coffee and tea",Lemonade,Old-fashioned lemonade,l,25.000,3.49,1
+Beverages,"Soft drinks, juices, coffee and tea",Iced Tea,Unsweetened iced tea,bottle,70,2.49,1
+Beverages,"Soft drinks, juices, coffee and tea",Root Beer,Craft root beer,bottle,55,1.99,1
+Beverages,"Soft drinks, juices, coffee and tea",Coconut Water,Natural coconut water,ml,38.200,3.29,1
+Beverages,"Soft drinks, juices, coffee and tea",Chai Tea,Spiced chai tea bags,box of 18,60,5.99,1
 Pantry,"Canned goods, pasta, rice and cooking essentials",Pasta,Penne pasta,kg,50.000,2.79,1
 Pantry,"Canned goods, pasta, rice and cooking essentials",Canned Tomatoes,Whole peeled tomatoes,pcs,120,1.89,1
+Pantry,"Canned goods, pasta, rice and cooking essentials",Rice,Basmati white rice,kg,80.000,4.99,1
+Pantry,"Canned goods, pasta, rice and cooking essentials",Olive Oil,Extra virgin olive oil,l,25.500,12.99,1
+Pantry,"Canned goods, pasta, rice and cooking essentials",Flour,All-purpose flour,kg,55.000,2.49,1
+Pantry,"Canned goods, pasta, rice and cooking essentials",Sugar,Granulated white sugar,kg,65.000,1.99,1
+Pantry,"Canned goods, pasta, rice and cooking essentials",Salt,Sea salt fine,kg,30.000,3.49,1
+Pantry,"Canned goods, pasta, rice and cooking essentials",Black Pepper,Whole black peppercorns,jar,45,4.29,1
+Pantry,"Canned goods, pasta, rice and cooking essentials",Canned Beans,Kidney beans in brine,pcs,110,1.49,1
+Pantry,"Canned goods, pasta, rice and cooking essentials",Pasta Sauce,Tomato basil pasta sauce,jar,85,3.99,1
+Pantry,"Canned goods, pasta, rice and cooking essentials",Honey,Organic raw honey,jar,40,7.99,1
+Pantry,"Canned goods, pasta, rice and cooking essentials",Vinegar,Apple cider vinegar,l,28.000,4.49,1
+Pantry,"Canned goods, pasta, rice and cooking essentials",Soy Sauce,Low sodium soy sauce,bottle,50,3.29,1
+Pantry,"Canned goods, pasta, rice and cooking essentials",Quinoa,Organic white quinoa,kg,18.300,8.99,1
+Pantry,"Canned goods, pasta, rice and cooking essentials",Cereal,Oatmeal old-fashioned rolled,kg,22.800,4.79,1
+Pantry,"Canned goods, pasta, rice and cooking essentials",Chocolate Chips,Semi-sweet chocolate chips,bag,35,3.89,1
+Meat,"Fresh and frozen meat products",Chicken Breast,Boneless skinless chicken breast,kg,22.400,9.99,1
+Meat,"Fresh and frozen meat products",Ground Beef,Lean ground beef 85%,kg,18.700,11.49,1
+Meat,"Fresh and frozen meat products",Pork Chops,Bone-in pork loin chops,kg,12.300,8.99,1
+Meat,"Fresh and frozen meat products",Bacon,Hickory smoked bacon,pack,55,6.99,1
+Meat,"Fresh and frozen meat products",Sausage,Italian pork sausage,pack,40,5.49,1
+Meat,"Fresh and frozen meat products",Turkey Breast,Sliced roasted turkey breast,kg,14.200,13.99,1
+Meat,"Fresh and frozen meat products",Lamb Chops,Loin lamb chops,kg,5.800,19.99,1
+Meat,"Fresh and frozen meat products",Steak,Ribeye steak,kg,9.600,24.99,1
+Meat,"Fresh and frozen meat products",Chicken Thighs,Boneless chicken thighs,kg,20.100,8.49,1
+Meat,"Fresh and frozen meat products",Ham,Sliced deli ham,kg,16.500,10.99,1
+Meat,"Fresh and frozen meat products",Hot Dogs,All-beef hot dogs,pack of 8,65,4.99,1
+Meat,"Fresh and frozen meat products",Pepperoni,Sliced pepperoni,bag,30,3.99,1
+Seafood,"Fresh fish and shellfish",Salmon,Atlantic salmon fillet,kg,10.200,22.99,1
+Seafood,"Fresh fish and shellfish",Shrimp,Raw jumbo shrimp peeled,kg,8.500,18.99,1
+Seafood,"Fresh fish and shellfish",Tuna,Sushi-grade ahi tuna steak,kg,4.300,29.99,1
+Seafood,"Fresh fish and shellfish",Cod,Pacific cod fillet,kg,7.800,16.99,1
+Seafood,"Fresh fish and shellfish",Scallops,Wild sea scallops,kg,3.200,32.99,1
+Seafood,"Fresh fish and shellfish",Tilapia,Fresh tilapia fillet,kg,11.400,12.99,1
+Seafood,"Fresh fish and shellfish",Crab Legs,Alaskan snow crab legs,kg,2.800,39.99,1
+Seafood,"Fresh fish and shellfish",Mussels,Prince Edward Island mussels,kg,6.500,9.99,1
+Seafood,"Fresh fish and shellfish",Lobster Tail,Frozen lobster tail,pcs,15,24.99,1
+Seafood,"Fresh fish and shellfish",Smoked Salmon,Scottish smoked salmon,kg,2.100,44.99,1
+Seafood,"Fresh fish and shellfish",Clams,Fresh littleneck clams,dozen,20,7.99,1
+Snacks,"Chips, nuts, and snack bars",Potato Chips,Classic salted potato chips,bag,120,3.49,1
+Snacks,"Chips, nuts, and snack bars",Pretzels,Sourdough pretzel twists,bag,90,2.99,1
+Snacks,"Chips, nuts, and snack bars",Almonds,Roasted salted almonds,kg,15.200,14.99,1
+Snacks,"Chips, nuts, and snack bars",Granola Bars,Chocolate chip granola bars,box of 6,80,4.29,1
+Snacks,"Chips, nuts, and snack bars",Popcorn,Butter microwave popcorn,box of 3,70,3.79,1
+Snacks,"Chips, nuts, and snack bars",Trail Mix,Fruit and nut trail mix,kg,12.800,11.99,1
+Snacks,"Chips, nuts, and snack bars",Crackers,Whole wheat crackers,box,85,3.29,1
+Snacks,"Chips, nuts, and snack bars",Beef Jerky,Original beef jerky,bag,45,7.99,1
+Snacks,"Chips, nuts, and snack bars",Chocolate Bar,Milk chocolate bar,pcs,150,1.99,1
+Snacks,"Chips, nuts, and snack bars",Cookies,Chocolate chip cookies,pack,110,3.89,1
+Snacks,"Chips, nuts, and snack bars",Rice Cakes,Lightly salted rice cakes,pack,60,2.49,1
+Snacks,"Chips, nuts, and snack bars",Peanuts,Honey roasted peanuts,jar,55,5.99,1
+Frozen,"Frozen meals and desserts",Ice Cream,Vanilla bean ice cream,container,40,5.99,1
+Frozen,"Frozen meals and desserts",Frozen Pizza,Pepperoni thin crust pizza,pcs,65,6.49,1
+Frozen,"Frozen meals and desserts",Frozen Vegetables,Mixed vegetables steam bag,bag,90,2.79,1
+Frozen,"Frozen meals and desserts",Chicken Nuggets,Breaded chicken nuggets,bag,55,7.99,1
+Frozen,"Frozen meals and desserts",French Fries,Crispy crinkle cut fries,bag,70,3.49,1
+Frozen,"Frozen meals and desserts",Waffles,Homestyle frozen waffles,box of 8,50,3.29,1
+Frozen,"Frozen meals and desserts",Frozen Berries,Mixed frozen berries,bag,35,8.99,1
+Frozen,"Frozen meals and desserts",Fish Sticks,Breaded fish sticks,bag,45,5.49,1
+Frozen,"Frozen meals and desserts",Ice Cream Sandwiches,Vanilla ice cream sandwich,box of 6,60,4.79,1
+Frozen,"Frozen meals and desserts",Frozen Dinner,Chicken pot pie,pcs,40,4.99,1
+Frozen,"Frozen meals and desserts",Veggie Burgers,Plant-based burger patties,box of 4,30,8.49,1
+Frozen,"Frozen meals and desserts",Frozen Yogurt,Strawberry frozen yogurt,container,25,4.49,1
+Household,"Cleaning and paper products",Paper Towels,Select-a-size paper towels,pack of 6,85,12.99,1
+Household,"Cleaning and paper products",Toilet Paper,2-ply bath tissue,pack of 12,120,9.99,1
+Household,"Cleaning and paper products",Dish Soap,Ultra concentrated dish soap,bottle,70,3.49,1
+Household,"Cleaning and paper products",Laundry Detergent,Free & clear liquid detergent,bottle,45,14.99,1
+Household,"Cleaning and paper products",Trash Bags,Tall kitchen drawstring bags,box of 50,90,8.99,1
+Household,"Cleaning and paper products",All-Purpose Cleaner,Disinfectant spray cleaner,bottle,60,4.29,1
+Household,"Cleaning and paper products",Sponges,Heavy duty scrub sponges,pack of 3,100,2.99,1
+Household,"Cleaning and paper products",Aluminum Foil,Heavy duty foil roll,pcs,55,5.49,1
+Household,"Cleaning and paper products",Plastic Wrap,Cling film wrap,roll,50,3.79,1
+Household,"Cleaning and paper products",Air Freshener,Linen scented spray,can,40,3.99,1
+Household,"Cleaning and paper products",Bleach,Concentrated bleach,bottle,35,2.89,1
+Household,"Cleaning and paper products",Glass Cleaner,Streak-free glass cleaner,bottle,48,3.29,1
+Personal Care,"Soap, shampoo, and hygiene items",Shampoo,Moisturizing shampoo,bottle,75,6.99,1
+Personal Care,"Soap, shampoo, and hygiene items",Conditioner,Detangling conditioner,bottle,70,6.99,1
+Personal Care,"Soap, shampoo, and hygiene items",Body Wash,Refreshing body wash,bottle,85,5.49,1
+Personal Care,"Soap, shampoo, and hygiene items",Bar Soap,Gentle cleansing bar,pack of 3,60,3.99,1
+Personal Care,"Soap, shampoo, and hygiene items",Toothpaste,Fluoride toothpaste,tube,110,3.49,1
+Personal Care,"Soap, shampoo, and hygiene items",Toothbrush,Soft bristle toothbrush,pcs,95,2.99,1
+Personal Care,"Soap, shampoo, and hygiene items",Deodorant,Solid antiperspirant,stick,80,4.99,1
+Personal Care,"Soap, shampoo, and hygiene items",Razor Blades,5-blade cartridge refills,pack of 4,40,19.99,1
+Personal Care,"Soap, shampoo, and hygiene items",Shaving Cream,Aloe shave gel,can,55,3.29,1
+Personal Care,"Soap, shampoo, and hygiene items",Lotion,Unscented body lotion,bottle,65,7.49,1
+Personal Care,"Soap, shampoo, and hygiene items",Sunscreen,SPF 50 lotion,bottle,30,12.99,1
+Personal Care,"Soap, shampoo, and hygiene items",Cotton Swabs,Paper stick cotton swabs,pack of 500,50,3.89,1
+Baby,"Diapers, wipes, and baby food",Baby Wipes,Fragrance free baby wipes,pack of 3,65,7.99,1
+Baby,"Diapers, wipes, and baby food",Diapers,Size 3 disposable diapers,pack of 36,45,24.99,1
+Baby,"Diapers, wipes, and baby food",Baby Food,Pureed sweet potato,pouch,80,1.49,1
+Baby,"Diapers, wipes, and baby food",Formula,Infant formula powder,can,25,34.99,1
+Baby,"Diapers, wipes, and baby food",Baby Shampoo,Tear-free baby shampoo,bottle,40,5.49,1
+Baby,"Diapers, wipes, and baby food",Diaper Cream,Zinc oxide cream,tube,35,6.99,1
+Baby,"Diapers, wipes, and baby food",Baby Cereal,Organic rice cereal,box,30,4.29,1
+Baby,"Diapers, wipes, and baby food",Training Pants,Pull-up pants size 3T,pack of 25,28,22.99,1
+Baby,"Diapers, wipes, and baby food",Teething Toy,Silicone teether,pcs,55,5.99,1
+Baby,"Diapers, wipes, and baby food",Baby Bottle,Anti-colic bottle 8oz,pcs,40,8.99,1
+Baby,"Diapers, wipes, and baby food",Pacifier,Orthodontic pacifier 2-pack,pack,60,4.49,1
+Pet Supplies,"Pet food and accessories",Dog Food,Chicken and rice kibble,bag 15lb,30,29.99,1
+Pet Supplies,"Pet food and accessories",Cat Food,Salmon pate wet food,can,120,1.29,1
+Pet Supplies,"Pet food and accessories",Dog Treats,Training bacon treats,bag,65,6.99,1
+Pet Supplies,"Pet food and accessories",Cat Litter,Clumping clay litter,box 20lb,25,12.99,1
+Pet Supplies,"Pet food and accessories",Bird Seed,Wild bird seed mix,bag 5lb,20,8.99,1
+Pet Supplies,"Pet food and accessories",Fish Food,Tropical fish flakes,container,45,4.49,1
+Pet Supplies,"Pet food and accessories",Dog Toy,Rubber squeaky bone,pcs,50,7.99,1
+Pet Supplies,"Pet food and accessories",Catnip,Dried catnip leaves,jar,35,3.99,1
+Pet Supplies,"Pet food and accessories",Pet Bed,Small plush pet bed,pcs,15,24.99,1
+Pet Supplies,"Pet food and accessories",Leash,Nylon dog leash 6ft,pcs,40,11.99,1
+Pet Supplies,"Pet food and accessories",Pet Bowl,Stainless steel bowl,pcs,55,5.49,1
+Electronics,"Batteries, cables, and gadgets",AA Batteries,Alkaline AA 4-pack,pack,95,6.99,1
+Electronics,"Batteries, cables, and gadgets",USB Cable,USB-C charging cable 6ft,pcs,60,9.99,1
+Electronics,"Batteries, cables, and gadgets",Light Bulb,LED soft white bulb 60W,pcs,80,4.99,1
+Electronics,"Batteries, cables, and gadgets",Power Strip,Surge protector 6-outlet,pcs,25,14.99,1
+Electronics,"Batteries, cables, and gadgets",Phone Charger,Wall charger USB-C,pcs,45,12.99,1
+Electronics,"Batteries, cables, and gadgets",Earbuds,Wired earbuds with mic,pcs,30,9.49,1
+Electronics,"Batteries, cables, and gadgets",HDMI Cable,High-speed HDMI 6ft,pcs,35,7.99,1
+Electronics,"Batteries, cables, and gadgets",Screen Protector,Tempered glass screen protector,pcs,50,8.49,1
+Electronics,"Batteries, cables, and gadgets",Flash Drive,USB 3.0 32GB,pcs,40,11.99,1
+Electronics,"Batteries, cables, and gadgets",Extension Cord,Indoor extension cord 10ft,pcs,28,6.49,1
+Electronics,"Batteries, cables, and gadgets",Mouse,Wired optical mouse,pcs,20,8.99,1
+Health,"Vitamins, supplements, and first aid",Multivitamin,Daily multivitamin tablet,bottle of 100,45,15.99,1
+Health,"Vitamins, supplements, and first aid",Vitamin D3,1000 IU softgels,bottle of 120,55,9.99,1
+Health,"Vitamins, supplements, and first aid",Pain Reliever,Acetaminophen 500mg,bottle of 50,70,6.49,1
+Health,"Vitamins, supplements, and first aid",Allergy Relief,Non-drowsy antihistamine,bottle of 30,40,12.99,1
+Health,"Vitamins, supplements, and first aid",Bandages,Flexible fabric bandages,box of 30,85,3.99,1
+Health,"Vitamins, supplements, and first aid",Hand Sanitizer,Moisturizing hand sanitizer,gel 8oz,100,3.49,1
+Health,"Vitamins, supplements, and first aid",Cough Drops,Menthol cough suppressant,bag of 30,60,2.49,1
+Health,"Vitamins, supplements, and first aid",First Aid Kit,Compact first aid kit,pcs,25,19.99,1
+Health,"Vitamins, supplements, and first aid",Fish Oil,Omega-3 softgels,bottle of 90,35,14.99,1
+Health,"Vitamins, supplements, and first aid",Probiotic,Daily probiotic capsules,bottle of 50,30,22.99,1
+Health,"Vitamins, supplements, and first aid",Calcium Supplement,Calcium with vitamin D3,bottle of 120,38,11.99,1
+Health,"Vitamins, supplements, and first aid",Antacid,Chewable antacid tablets,bottle of 96,50,5.49,1
+Office Supplies,"Pens, paper, and stationery",Copy Paper,Multipurpose 20lb paper,ream,40,6.99,1
+Office Supplies,"Pens, paper, and stationery",Pens,Ballpoint pen black,pack of 10,80,4.49,1
+Office Supplies,"Pens, paper, and stationery",Notebook,College ruled spiral notebook,pcs,65,2.99,1
+Office Supplies,"Pens, paper, and stationery",Sticky Notes,3x3 yellow sticky notes,pack of 3,55,3.79,1
+Office Supplies,"Pens, paper, and stationery",Envelopes,#10 security envelopes,box of 50,30,5.99,1
+Office Supplies,"Pens, paper, and stationery",Tape,Invisible tape with dispenser,pcs,45,2.49,1
+Office Supplies,"Pens, paper, and stationery",Binder,1-inch 3-ring binder,pcs,25,4.99,1
+Office Supplies,"Pens, paper, and stationery",Highlighter,Fluorescent yellow marker,pack of 4,70,3.29,1
+Office Supplies,"Pens, paper, and stationery",Stapler,Full strip stapler,pcs,20,8.99,1
+Office Supplies,"Pens, paper, and stationery",File Folder,Manila file folders,pack of 10,40,5.49,1
+Office Supplies,"Pens, paper, and stationery",Paper Clips,Jumbo paper clips,box of 100,60,1.99,1
+Office Supplies,"Pens, paper, and stationery",Scissors,Stainless steel scissors 8",pcs,35,4.79,1
+Automotive,"Car care and accessories",Motor Oil,5W-30 synthetic blend oil,quart,40,7.99,1
+Automotive,"Car care and accessories",Windshield Washer Fluid,Rain repellent washer fluid,gal,25,4.49,1
+Automotive,"Car care and accessories",Air Freshener Vent Clip,Vent car air freshener,pcs,55,3.99,1
+Automotive,"Car care and accessories",Car Wash Soap,Concentrated car wash liquid,bottle,30,8.99,1
+Automotive,"Car care and accessories",Jumper Cables,12ft booster cables,set,15,24.99,1
+Automotive,"Car care and accessories",Tire Pressure Gauge,Digital tire gauge,pcs,20,9.99,1
+Automotive,"Car care and accessories",Phone Mount,Car dashboard phone mount,pcs,35,12.99,1
+Automotive,"Car care and accessories",Microfiber Cloths,Pack of 12 microfiber cloths,pack,50,6.99,1
+Automotive,"Car care and accessories",Engine Coolant,Premixed antifreeze coolant,gal,18,14.99,1
+Automotive,"Car care and accessories",Spare Fuses,Assorted blade fuses,kit,22,5.99,1
+Automotive,"Car care and accessories",Ice Scraper,Extendable ice scraper,pcs,30,3.49,1
+Automotive,"Car care and accessories",Seat Cover,Universal bench seat cover,pcs,10,29.99,1
+Sports,"Fitness gear and outdoor recreation",Water Bottle,Stainless steel insulated bottle 24oz,pcs,45,16.99,1
+Sports,"Fitness gear and outdoor recreation",Yoga Mat,6mm non-slip yoga mat,pcs,20,22.99,1
+Sports,"Fitness gear and outdoor recreation",Tennis Balls,Championship tennis balls,can of 3,35,5.99,1
+Sports,"Fitness gear and outdoor recreation",Jump Rope,Speed jump rope,pcs,28,7.99,1
+Sports,"Fitness gear and outdoor recreation",Resistance Bands,Set of 3 resistance bands,set,30,12.99,1
+Sports,"Fitness gear and outdoor recreation",Dumbbell Set,Neoprene dumbbell pair 5lb,pair,15,19.99,1
+Sports,"Fitness gear and outdoor recreation",Soccer Ball,Size 5 soccer ball,pcs,18,24.99,1
+Sports,"Fitness gear and outdoor recreation",Frisbee,Ultimate flying disc,pcs,40,8.99,1
+Sports,"Fitness gear and outdoor recreation",Cooler,Soft-sided cooler bag 24 can,pcs,12,34.99,1
+Sports,"Fitness gear and outdoor recreation",Sunglasses,Polarized sport sunglasses,pcs,25,14.99,1
+Sports,"Fitness gear and outdoor recreation",Bike Pump,Floor bike pump with gauge,pcs,10,29.99,1
+Sports,"Fitness gear and outdoor recreation",Fitness Tracker,Basic step tracker watch,pcs,20,39.99,1
+Seasonal,"Holiday and seasonal items",Christmas Lights,LED string lights 100ct,pcs,30,19.99,0
+Seasonal,"Holiday and seasonal items",Gift Wrap,Assorted holiday gift wrap,roll of 4,40,5.99,0
+Seasonal,"Holiday and seasonal items",Grill Tools,3-piece stainless steel BBQ set,set,22,22.99,1
+Seasonal,"Holiday and seasonal items",Sunscreen Spray,SPF 30 continuous spray,can,35,11.99,1
+Seasonal,"Holiday and seasonal items",Firewood,Bundle of kiln-dried firewood,bundle,15,7.99,0
+Seasonal,"Holiday and seasonal items",Ornaments,Shaterproof ornaments set,set of 20,25,14.99,0
+Seasonal,"Holiday and seasonal items",Citronella Candle,Bucket citronella candle,pcs,28,9.99,1
+Seasonal,"Holiday and seasonal items",Halloween Candy,Assorted fun size chocolates,bag,60,12.99,0
+Seasonal,"Holiday and seasonal items",Reusable Ice Pack,Plastic ice pack for coolers,pcs,45,2.99,1
+Seasonal,"Holiday and seasonal items",Gardening Gloves,Nitrile coated gardening gloves,pair,50,4.99,1
+Seasonal,"Holiday and seasonal items",Snow Shovel,Ergonomic snow shovel,pcs,8,22.99,0
+Seasonal,"Holiday and seasonal items",Plant Food,Water soluble plant food,bottle,30,6.49,1
+International Foods,"Imported specialty foods",Soy Sauce,Premium Japanese soy sauce,bottle,40,7.99,1
+International Foods,"Imported specialty foods",Sushi Rice,Short grain sushi rice,kg,20.200,6.49,1
+International Foods,"Imported specialty foods",Curry Paste,Thai red curry paste,jar,25,4.99,1
+International Foods,"Imported specialty foods",Tortillas,Corn tortillas 6-inch,pack of 30,35,3.29,1
+International Foods,"Imported specialty foods",Kimchi,Spicy fermented napa cabbage,jar,15,9.99,1
+International Foods,"Imported specialty foods",Nori Sheets,Roasted seaweed sheets for sushi,pack of 10,30,3.99,1
+International Foods,"Imported specialty foods",Harissa Paste,Spicy Moroccan chili paste,tube,18,5.49,1
+International Foods,"Imported specialty foods",Tahini,Toasted sesame seed paste,jar,22,8.99,1
+International Foods,"Imported specialty foods",Rice Paper,Vietnamese spring roll wrappers,pack,28,2.99,1
+International Foods,"Imported specialty foods",Coconut Milk,Unsweetened coconut milk,can,50,2.49,1
+International Foods,"Imported specialty foods",Panko Breadcrumbs,Japanese style breadcrumbs,box,40,3.49,1
+International Foods,"Imported specialty foods",Gochujang,Korean fermented chili paste,tub,20,6.99,1
+Bulk Foods,"Bulk bin items sold by weight",Almonds,Whole raw almonds,kg,12.500,13.99,1
+Bulk Foods,"Bulk bin items sold by weight",Cashews,Roasted salted cashews,kg,8.300,18.99,1
+Bulk Foods,"Bulk bin items sold by weight",Oats,Rolled oats,kg,25.000,3.29,1
+Bulk Foods,"Bulk bin items sold by weight",Quinoa,Organic white quinoa,kg,14.800,8.99,1
+Bulk Foods,"Bulk bin items sold by weight",Chocolate Covered Pretzels,Milk chocolate pretzels,kg,6.200,11.99,1
+Bulk Foods,"Bulk bin items sold by weight",Dried Mango,Unsulfured dried mango slices,kg,4.500,19.99,1
+Bulk Foods,"Bulk bin items sold by weight",Granola,Maple pecan granola,kg,10.100,9.99,1
+Bulk Foods,"Bulk bin items sold by weight",Sunflower Seeds,Roasted salted sunflower seeds,kg,11.400,6.99,1
+Bulk Foods,"Bulk bin items sold by weight",Wasabi Peas,Cruncy wasabi peas,kg,5.700,10.49,1
+Bulk Foods,"Bulk bin items sold by weight",Candy,Assorted gummy bears,kg,9.800,7.99,1
+Bulk Foods,"Bulk bin items sold by weight",Raisins,California seedless raisins,kg,16.200,5.99,1
+Bulk Foods,"Bulk bin items sold by weight",Coffee Beans,Ethiopian whole bean coffee,kg,3.900,22.99,1
+Bulk Foods,"Bulk bin items sold by weight",Chia Seeds,Organic black chia seeds,kg,2.800,12.49,1
+Bulk Foods,"Bulk bin items sold by weight",Flax Seeds,Ground flaxseed meal,kg,7.100,4.99,1
+Bulk Foods,"Bulk bin items sold by weight",Dried Cranberries,Sweetened dried cranberries,kg,8.600,10.99,1
+Bulk Foods,"Bulk bin items sold by weight",Pumpkin Seeds,Roasted pepitas,kg,5.200,15.99,1
+Bulk Foods,"Bulk bin items sold by weight",Walnuts,Raw walnut halves,kg,6.800,16.49,1
+Bulk Foods,"Bulk bin items sold by weight",Pecans,Georgia pecan halves,kg,4.100,22.99,1
+Bulk Foods,"Bulk bin items sold by weight",Pistachios,Roasted pistachios in shell,kg,3.500,20.99,1
+Bulk Foods,"Bulk bin items sold by weight",Banana Chips,Sweetened banana chips,kg,9.200,7.49,1
